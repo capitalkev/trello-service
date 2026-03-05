@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, BackgroundTasks
 
-from src.application.trello.sync_trello_state import SyncTrelloStateOperacionOperacion
+from src.application.trello.sync_trello_state import SyncTrelloStateOperacion
 from src.interfaces.dto.trello_webhook_dto import TrelloWebhookPayload
 from src.interfaces.dependencias.trello import dp_card_id
 
@@ -27,7 +27,7 @@ async def validate_webhook_get():
 async def handle_webhook(
     payload: TrelloWebhookPayload,
     background_tasks: BackgroundTasks,
-    use_case: SyncTrelloStateOperacionOperacion = Depends(dp_card_id),
+    use_case: SyncTrelloStateOperacion = Depends(dp_card_id),
 ):
     """
     Recibe el evento de Trello y lo procesa en segundo plano.

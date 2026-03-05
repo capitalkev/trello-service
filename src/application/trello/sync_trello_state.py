@@ -2,7 +2,7 @@ from src.domain.interfaz import IOperacionRepository
 from src.interfaces.dto.trello_webhook_dto import TrelloWebhookPayload
 
 
-class SyncTrelloStateOperacionOperacion:
+class SyncTrelloStateOperacion:
 
     LIST_TO_STATE_MAP = {
         "69a6f5fd1947cdca98a2d12e": "excedentes",
