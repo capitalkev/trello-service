@@ -32,26 +32,16 @@ class SyncTrelloStateOperacion:
             trello_card_id = action.data.card.id
             nueva_lista_id = action.data.listAfter.id
 
-            nuevo_estado_bd = self.LIST_TO_STATE_MAP.get(nueva_lista_id)
+            # Aquí usamos "OTRO" como valor por defecto si el ID no está en el mapa
+            nuevo_estado_bd = self.LIST_TO_STATE_MAP.get(nueva_lista_id, "OTRO")
 
-            if nuevo_estado_bd:
-                print(
-                    f"Intento de actualización para la tarjeta: {trello_card_id} al estado {nuevo_estado_bd}"
-                )
+            print(f"Intento de actualización para la tarjeta: {trello_card_id} al estado {nuevo_estado_bd}")
 
-                actualizacion_exitosa = self.operacion_repo.update_estado_by_card_id(
-                    card_id=trello_card_id, nuevo_estado=nuevo_estado_bd
-                )
+            actualizacion_exitosa = self.operacion_repo.update_estado_by_card_id(
+                card_id=trello_card_id, nuevo_estado=nuevo_estado_bd
+            )
 
-                if actualizacion_exitosa:
-                    print(
-                        f"ÉXITO: Tarjeta {trello_card_id} actualizada en la BD al estado {nuevo_estado_bd}."
-                    )
-                else:
-                    print(
-                        f"INFO: Tarjeta {trello_card_id} no encontrada en la BD. Se ignora el evento."
-                    )
+            if actualizacion_exitosa:
+                print(f"ÉXITO: Tarjeta {trello_card_id} actualizada en la BD al estado {nuevo_estado_bd}.")
             else:
-                print(
-                    f"OMITIDO: La lista de Trello {nueva_lista_id} no está mapeada a ningún estado."
-                )
+                print(f"INFO: Tarjeta {trello_card_id} no encontrada en la BD. Se ignora el evento.")
