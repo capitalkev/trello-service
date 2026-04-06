@@ -29,8 +29,13 @@ class ApiKeyMiddleware(BaseHTTPMiddleware):
 
         if request.url.path not in self.public_paths:
             api_key = request.headers.get("X-API-KEY")
+
+            if not api_key:
+                api_key = request.query_params.get("api_key")
+
             if api_key is not None:
                 api_key = api_key.strip()
+
             if not api_key or api_key not in self.api_keys:
                 return JSONResponse(status_code=401, content={"detail": "Unauthorized"})
         response = await call_next(request)
